@@ -10,6 +10,8 @@ import model.User;
  */
 
 public class Payment extends  UserProcess {
+	
+		double amount;
 		
 		// this method returns true if the amount get transfer successfully otherwise return false.
 		boolean transferAmount(Account fromAccount, Account toAccount, double amount) {
@@ -32,17 +34,17 @@ public class Payment extends  UserProcess {
 					String toUser = stringScanner.next();
 					if(isUserAvailable(toUser)) {
 					System.out.println("Enter amount to transfer");
-					double amount = Validation.getDouble();
+					amount = Validation.getDouble();
 					if(Validation.checkLimit(amount)) { 
 						System.out.println("Choose the account to transfer amount: ");
 						accountObject = chooseAccount();
 						System.out.println("Enter your pin:");
 						int pin = Validation.getInteger();
 						if(accountObject.checkPin(pin)) {
-							User toUserObj = executorObject.selectUser(toUser);
-							Account toAccount  = executorObject.selectAccount(toUserObj.defaultAccount);
+							User toUserObj = (User)userExecutor.select(toUser);
+							Account toAccount  = (Account)accountExecutor.select(toUserObj.defaultAccount);
 							if(transferAmount(accountObject,toAccount, amount)) {
-								executorObject.insertTransaction(new Transaction(accountObject.userId, toAccount.userId,accountObject.accountNo,toAccount.accountNo, amount));
+								transactionExecutor.insert(new Transaction(accountObject.userId, toAccount.userId,accountObject.accountNo,toAccount.accountNo, amount));
 								System.out.println("Transaction successfull!");
 							}
 							else {

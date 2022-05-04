@@ -30,8 +30,8 @@ public class Authentication extends UserProcess {
 					if(Validation.checkValidPin(pin)) {
 						userObject = new User(phoneNumber,userName,password,accountNumber);
 						accountObject = new Account(phoneNumber,accountNumber,bankName,amount,pin);
-						executorObject.insertAccount(accountObject);
-						executorObject.insertUser(userObject);
+						accountExecutor.insert(accountObject);
+						userExecutor.insert(userObject);
 						System.out.println("User Created successfully!");
 						isSignIn = true;
 					}
@@ -58,9 +58,9 @@ public class Authentication extends UserProcess {
 		String password = stringScanner.next();
 		if(Validation.checkPassword(userId, password)) {
 			isSignIn = true;
-			userObject =  executorObject.selectUser(userId);
+			userObject = (User)userExecutor.select(userId);
 			String defAccount = executorObject.getDefaultAccount(userId);
-			accountObject = executorObject.selectAccount(defAccount);
+			accountObject = (Account)accountExecutor.select(defAccount);
 			System.out.println("Signed In!");
 		}
 		}

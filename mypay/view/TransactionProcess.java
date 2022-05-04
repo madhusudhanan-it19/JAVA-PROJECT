@@ -15,7 +15,7 @@ public class TransactionProcess extends UserProcess {
 		if(isSignIn) {
 			
 				try {
-					ResultSet result = executorObject.showTransaction(userObject.userId);
+					ResultSet result = (ResultSet)transactionExecutor.select(userObject.userId);
 					System.out.println();
 					while(result.next()) {
 						if(result.getString(3).equals(userObject.userId)) {

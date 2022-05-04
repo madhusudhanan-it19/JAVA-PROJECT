@@ -58,7 +58,7 @@ public class Recharge extends UserProcess {
 		private void transfer() {
 					accountObject.amount -= amount;
 					executorObject.updateAmount(accountObject);
-					executorObject.insertTransaction(new Transaction(accountObject.userId,phNo,accountObject.accountNo,provider, amount));
+					transactionExecutor.insert(new Transaction(accountObject.userId,phNo,accountObject.accountNo,provider, amount));
 			
 			
 		}

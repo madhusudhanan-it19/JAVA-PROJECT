@@ -8,7 +8,7 @@ import model.Account;
  */
 
 public class AccountProcess  extends UserProcess{
-	
+		
 		// this method is to add another account to the user.
 		void addAccount(){
 			if(isSignIn) {
@@ -23,7 +23,7 @@ public class AccountProcess  extends UserProcess{
 					System.out.println("Enter Upi pin: ");
 					int pin = Validation.getInteger();
 					if(Validation.checkValidPin(pin)) {
-						executorObject.insertAccount(new Account(userObject.userId, accountNumber, bankName, amount, pin));
+						accountExecutor.insert(new Account(userObject.userId, accountNumber, bankName, amount, pin));
 						System.out.println("Account added successfully!");
 					}
 				}

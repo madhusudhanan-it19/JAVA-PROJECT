@@ -11,7 +11,7 @@ public class User {
 			this.password = password;
 			this.defaultAccount = defaultAccount;
 		}
-		boolean checkPassword(String pass) {
+		public boolean checkPassword(String pass) {
 			if(pass.equals(password)) {
 				return true;
 			}

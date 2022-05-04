@@ -2,7 +2,6 @@ package view;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import controller.UserProcess;
 import model.Account;
 import model.Request;
@@ -22,7 +21,7 @@ public class RequestProcess extends UserProcess {
 				System.out.println("Enter amount: ");
 				double amount =  Validation.getDouble();
 				if(Validation.checkLimit(amount)) {
-					executorObject.insertRequest(new Request(accountObject.userId, toUser, amount, false));
+					requestExecutor.insert(new Request(accountObject.userId, toUser, amount, false));
 					System.out.println("Request Sent!");
 				} 
 			}
@@ -54,20 +53,27 @@ public class RequestProcess extends UserProcess {
 				System.out.println("1. Pay request");
 				System.out.println("2. Reject request");
 				int choice = Validation.getInteger();
-				accountObject = chooseAccount();
-				System.out.println("Enter pin: ");
-				int pin = Validation.getInteger();
-				if(accountObject.checkPin(pin)) {
 				if(choice == 1) {
+					accountObject = chooseAccount();
+					System.out.println("Enter pin: ");
+					int pin = Validation.getInteger();
+					if(accountObject.checkPin(pin)) {
 					acceptRequest(requestId);
 					System.out.println("Request money paid!");
+					}
 				}
 				else {
-					rejectRequest(requestId);
-					System.out.println("Request rejected!");
+					System.out.println("Enter user password: ");
+					String password = stringScanner.next();
+					if(userObject.checkPassword(password)) {
+						rejectRequest(requestId);
+						System.out.println("Request rejected!");
+					}
+					else {
+					System.out.println("Password Incorrect!");
+					}
 				}
-				}
-		}
+			}
 			else {
 				System.out.println("No request Found!");
 			}
@@ -83,12 +89,13 @@ public class RequestProcess extends UserProcess {
 	
 	// this method is to accept the request and pay the requested money.
 	void acceptRequest(int requestId) {
-			Request requestObj = executorObject.selectRequest(requestId);
+			String id = ""  + requestId;
+			Request requestObj = (Request)requestExecutor.select(id);
 			double amount = requestObj.amount;
 			String toAccountNo = executorObject.getDefaultAccount(requestObj.fromUser);
-			Account toAcccountObject = executorObject.selectAccount(toAccountNo);
+			Account toAcccountObject = (Account)accountExecutor.select(toAccountNo);
 			if(new Payment().transferAmount(accountObject,toAcccountObject,amount)) {
-			executorObject.insertTransaction(new Transaction(accountObject.userId, toAcccountObject.userId, accountObject.accountNo, toAcccountObject.accountNo, amount));
+			transactionExecutor.insert(new Transaction(accountObject.userId, toAcccountObject.userId, accountObject.accountNo, toAcccountObject.accountNo, amount));
 			executorObject.updateRequestStatus(requestId);
 			}
 	}

@@ -13,7 +13,11 @@ import model.User;
 public class UserProcess {
 	protected static Scanner integerScanner = new Scanner(System.in);
 	protected static Scanner stringScanner = new Scanner(System.in);
-	protected static QueryProcess executorObject = new QueryExecutor();
+	protected static QueryExecutor executorObject = new QueryExecutor();
+	protected static QueryProcess userExecutor = new UserExecutor();
+	protected static QueryProcess accountExecutor = new AccountExecutor();
+	protected static QueryProcess requestExecutor = new RequestExecutor();
+	protected static QueryProcess transactionExecutor = new TransactionExecutor();
 	protected static User userObject;
 	protected static Account accountObject;
 	protected static boolean isSignIn= false;
