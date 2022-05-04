@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import model.Account;
 
-public class AccountExecutor extends QueryExecutor implements QueryProcess{
+public class AccountExecutor extends QueryExecutor implements QueryProcess {
 	
 	
 	// This method is used to insert account into the account table.

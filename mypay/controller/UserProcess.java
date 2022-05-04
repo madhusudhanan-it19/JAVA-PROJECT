@@ -20,7 +20,6 @@ public class UserProcess {
 	protected static QueryProcess transactionExecutor = new TransactionExecutor();
 	protected static User userObject;
 	protected static Account accountObject;
-	protected static boolean isSignIn= false;
 	
 	// this method is used to check whether the given user is available or not.
 	protected boolean isUserAvailable(String user) {

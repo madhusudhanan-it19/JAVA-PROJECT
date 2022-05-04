@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Account;
+import model.User;
 
 /* 
  * This class acts like a controller to get and update values from database.
@@ -67,7 +68,6 @@ public class QueryExecutor {
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
-		
 		return null;
 	}
 	
@@ -105,7 +105,46 @@ public class QueryExecutor {
 			exception.printStackTrace();
 		}
 	}
+
+	//This method is used to change password of the user.
+	public void changePassword(User userObject) {
+		try {
+			query = "update user set password = ? where user_id = ? ;";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userObject.getPassword());
+			statement.setString(2, userObject.userId);
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
 	
+	//This method is used to change upi pin of  the account.
+	public void changePin(Account accountObject) {
+		try {
+			query = "update account set upi_pin = ? where acc_no = ? ;";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, accountObject.getPin());
+			statement.setString(2, accountObject.accountNo);
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
 	
-	
+	//This method is used to change default account of the user.
+	public void changeDefaultAccount(User userObject) {
+		try {
+			query = "update user set default_acc = ? where user_id = ? ;";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, userObject.defaultAccount);
+			statement.setString(2, userObject.userId);
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
 }

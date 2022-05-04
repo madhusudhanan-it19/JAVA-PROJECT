@@ -1,5 +1,7 @@
 package model;
 
+// This is a model class of account table.
+
 public class Account {
 	public String userId;
 	public String accountNo;
@@ -21,5 +23,9 @@ public class Account {
 	}
 	public int getPin() {
 		return upiPin;
+	}
+	
+	public void setPin(int pin) {
+		this.upiPin = pin;
 	}
 }

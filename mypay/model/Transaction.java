@@ -2,6 +2,8 @@ package model;
 
 import java.util.Date;
 
+//This is a model class of transaction table.
+
 public class Transaction {
 	public int transactionId;
 	public String fromUser;

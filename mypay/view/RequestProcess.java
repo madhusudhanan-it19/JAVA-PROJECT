@@ -14,30 +14,22 @@ public class RequestProcess extends UserProcess {
 	
 	// this method is to send money request to another user. 
 	void sendRequest() {
-		if(isSignIn) {
-			System.out.println("Enter the user Id to send Request: ");
-			String toUser = stringScanner.next();
-			if(isUserAvailable(toUser)) {
-				System.out.println("Enter amount: ");
-				double amount =  Validation.getDouble();
-				if(Validation.checkLimit(amount)) {
-					requestExecutor.insert(new Request(accountObject.userId, toUser, amount, false));
-					System.out.println("Request Sent!");
-				} 
-			}
-			else {
-				System.out.println("User not found!");
-			}
-			
+		System.out.println("Enter the user Id to send Request: ");
+		String toUser = stringScanner.next();
+		if(isUserAvailable(toUser)) {
+			System.out.println("Enter amount: ");
+			double amount =  Validation.getDouble();
+			if(Validation.checkLimit(amount)) {
+				requestExecutor.insert(new Request(accountObject.userId, toUser, amount, false));
+				System.out.println("Request Sent!");
+			} 
 		}
 		else {
-			System.out.println("Please Sign In!");
+			System.out.println("User not found!");
 		}
-	}
-	
+	}	
 	// this method is to view the request given by another user. 
 	void viewRequest() {
-		if(isSignIn) {
 		try {
 			ResultSet result = executorObject.selectAll("request", "to_user", userObject.userId);
 			boolean isRequestFound = false;
@@ -80,11 +72,6 @@ public class RequestProcess extends UserProcess {
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}
-		}
-		else {
-			System.out.println("Please sign in!");
-		}
-		
 	}
 	
 	// this method is to accept the request and pay the requested money.
@@ -95,8 +82,8 @@ public class RequestProcess extends UserProcess {
 			String toAccountNo = executorObject.getDefaultAccount(requestObj.fromUser);
 			Account toAcccountObject = (Account)accountExecutor.select(toAccountNo);
 			if(new Payment().transferAmount(accountObject,toAcccountObject,amount)) {
-			transactionExecutor.insert(new Transaction(accountObject.userId, toAcccountObject.userId, accountObject.accountNo, toAcccountObject.accountNo, amount));
-			executorObject.updateRequestStatus(requestId);
+				transactionExecutor.insert(new Transaction(accountObject.userId, toAcccountObject.userId, accountObject.accountNo, toAcccountObject.accountNo, amount));
+				executorObject.updateRequestStatus(requestId);
 			}
 	}
 	

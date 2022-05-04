@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.User;
 
-public class UserExecutor extends QueryExecutor implements QueryProcess{
+public class UserExecutor extends QueryExecutor implements QueryProcess {
 	//This method is used to insert user into the user table.
 	public void insert(Object user) {
 		try {
@@ -21,6 +21,8 @@ public class UserExecutor extends QueryExecutor implements QueryProcess{
 			}
 	}
 	
+	
+	//This method is used to select the user from the user table. 
 	public User select(String userId) {
 		try {
 			query = "select * from user where user_id = ?;";

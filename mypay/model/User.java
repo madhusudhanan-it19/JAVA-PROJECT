@@ -1,5 +1,7 @@
 package model;
 
+// This is a model class of user table.
+
 public class User {
 		public String userId;
 		public String userName;
@@ -20,5 +22,9 @@ public class User {
 		
 		public String getPassword() {
 			return password;
+		}
+		
+		public void setPassword(String password) {
+			this.password = password;
 		}
 }

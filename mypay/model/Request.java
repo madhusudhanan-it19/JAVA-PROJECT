@@ -1,5 +1,8 @@
 package model;
 
+
+//This is a model class of Request table.
+
 public class Request {
 	public int requsetId;
 	public String fromUser;

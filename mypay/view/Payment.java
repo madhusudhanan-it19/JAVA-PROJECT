@@ -29,36 +29,32 @@ public class Payment extends  UserProcess {
 		
 		// this method is used to send money to the user.
 		void PayUser() {
-				if(isSignIn) {
-					System.out.println("Enter to user id: ");
-					String toUser = stringScanner.next();
-					if(isUserAvailable(toUser)) {
-					System.out.println("Enter amount to transfer");
-					amount = Validation.getDouble();
-					if(Validation.checkLimit(amount)) { 
-						System.out.println("Choose the account to transfer amount: ");
-						accountObject = chooseAccount();
-						System.out.println("Enter your pin:");
-						int pin = Validation.getInteger();
-						if(accountObject.checkPin(pin)) {
-							User toUserObj = (User)userExecutor.select(toUser);
-							Account toAccount  = (Account)accountExecutor.select(toUserObj.defaultAccount);
-							if(transferAmount(accountObject,toAccount, amount)) {
-								transactionExecutor.insert(new Transaction(accountObject.userId, toAccount.userId,accountObject.accountNo,toAccount.accountNo, amount));
-								System.out.println("Transaction successfull!");
-							}
-							else {
-								System.out.println("Transaction failed!");
-							}
+			
+			System.out.println("Enter to user id: ");
+			String toUser = stringScanner.next();
+			if(isUserAvailable(toUser)) {
+				System.out.println("Enter amount to transfer");
+				amount = Validation.getDouble();
+				if(Validation.checkLimit(amount)) { 
+					System.out.println("Choose the account to transfer amount: ");
+					accountObject = chooseAccount();
+					System.out.println("Enter your pin:");
+					int pin = Validation.getInteger();
+					if(accountObject.checkPin(pin)) {
+						User toUserObj = (User)userExecutor.select(toUser);
+						Account toAccount  = (Account)accountExecutor.select(toUserObj.defaultAccount);
+						if(transferAmount(accountObject,toAccount, amount)) {
+							transactionExecutor.insert(new Transaction(accountObject.userId, toAccount.userId,accountObject.accountNo,toAccount.accountNo, amount));
+							System.out.println("Transaction successfull!");
+						}
+						else {
+							System.out.println("Transaction failed!");
 						}
 					}
 				}
-				else {
-						System.out.println("No user found!");
-					}
 			}
-				else {
-					System.out.println("Not signed In");
+			else {
+					System.out.println("No user found!");
 				}
 		}
 
