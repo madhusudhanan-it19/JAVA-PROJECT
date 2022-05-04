@@ -1,5 +1,6 @@
 package view;
 
+//This is the primary screen where the user can choose the action.
 public class PrimaryScreen {
 		public PrimaryScreen() {
 			boolean flagloop = true;
